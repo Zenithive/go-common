@@ -17,19 +17,16 @@ func Recovery(log *slog.Logger) gin.HandlerFunc {
 					c.Request.Context(),
 					"panic recovered",
 					slog.Any("panic", err),
-					slog.String(
-						"request_id",
-						ReqID(c.Request.Context()),
-					),
+					slog.String("request_id", c.GetString("request_id")),
 					slog.String("method", c.Request.Method),
 					slog.String("path", c.Request.URL.Path),
 					slog.String("stack", string(debug.Stack())),
 				)
 
 				response.WriteErr(
-					c.Writer,
+					c,
 					errorx.Internal(nil),
-					ReqID(c.Request.Context()),
+					c.GetString("request_id"), // omit if WriteErr reads it from context
 				)
 
 				c.Abort()
