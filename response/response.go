@@ -1,10 +1,10 @@
 package response
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/Zenithive/go-common/errorx"
+	"github.com/gin-gonic/gin"
 )
 
 type Err struct {
@@ -18,29 +18,26 @@ type ErrBody struct {
 	Detail any    `json:"details,omitempty"`
 }
 
-func JSON(w http.ResponseWriter, status int, data any) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
-
-	_ = json.NewEncoder(w).Encode(data)
+func JSON(c *gin.Context, status int, data any) {
+	c.JSON(status, data)
 }
 
-func OK(w http.ResponseWriter, data any) {
-	JSON(w, http.StatusOK, data)
+func OK(c *gin.Context, data any) {
+	c.JSON(http.StatusOK, data)
 }
 
-func Created(w http.ResponseWriter, data any) {
-	JSON(w, http.StatusCreated, data)
+func Created(c *gin.Context, data any) {
+	c.JSON(http.StatusCreated, data)
 }
 
-func NoContent(w http.ResponseWriter) {
-	w.WriteHeader(http.StatusNoContent)
+func NoContent(c *gin.Context) {
+	c.Status(http.StatusNoContent)
 }
 
-func WriteErr(w http.ResponseWriter, err error, reqID string) {
+func WriteErr(c *gin.Context, err error, reqID string) {
 	appErr := errorx.From(err)
 
-	JSON(w, appErr.Status, Err{
+	c.JSON(appErr.Status, Err{
 		Error: ErrBody{
 			Code:   appErr.Code,
 			Msg:    appErr.Msg,

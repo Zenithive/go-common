@@ -1,24 +1,22 @@
-package ginx
+package validation
 
 import (
 	"github.com/Zenithive/go-common/errorx"
 	"github.com/Zenithive/go-common/response"
-	"github.com/Zenithive/go-common/validation"
 	"github.com/gin-gonic/gin"
 )
 
 func Bind(c *gin.Context, v any) bool {
 	if err := c.ShouldBindJSON(v); err != nil {
-		detail := validation.Parse(err)
+		detail := Parse(err)
 
 		response.WriteErr(
-			c.Writer,
+			c,
 			errorx.Validation(detail),
-			c.GetString("request_id"),
+			c.GetString("request_id"), // omit if WriteErr fetches it itself
 		)
 
 		c.Abort()
-
 		return false
 	}
 
