@@ -1,6 +1,6 @@
 module github.com/Zenithive/go-common
 
-go 1.25.7
+go 1.26.0
 
 require (
 	github.com/gin-gonic/gin v1.12.0
@@ -8,15 +8,16 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/pressly/goose/v3 v3.27.3
 	go.mongodb.org/mongo-driver v1.17.9
-	go.opentelemetry.io/otel v1.44.0
-	go.opentelemetry.io/otel/metric v1.44.0
-	go.opentelemetry.io/otel/trace v1.44.0
+	go.opentelemetry.io/otel v1.47.0
+	go.opentelemetry.io/otel/metric v1.47.0
+	go.opentelemetry.io/otel/trace v1.47.0
 )
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	go.opentelemetry.io/otel/log v1.47.0 // indirect
 )
 
 require (
